@@ -1,0 +1,680 @@
+/* =====================================================
+   VARIABLES & BASE
+===================================================== */
+
+:root {
+    --gold: linear-gradient(135deg, #bf953f, #fcf6ba, #aa771c);
+    --gold-solid: #C5A059;
+    --deep-obsidian: #080808;
+    --chili-red: #990000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--deep-obsidian);
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* =====================================================
+   NAVIGATION – ULTRA GLASS
+===================================================== */
+
+.nav-ultra {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 25px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(8,8,8,0.85);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(197,160,89,0.08);
+    transition: 0.4s ease;
+    z-index: 1000;
+}
+
+.nav-scrolled {
+    padding: 12px 5%;
+    background: rgba(0,0,0,0.95);
+    border-bottom: 1px solid var(--gold-solid);
+}
+
+.brand-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 15px;
+}
+
+.nav-logo-img {
+    height: 45px;
+    width: auto;
+    transition: 0.3s;
+}
+
+.logo-text {
+    font-size: 1.2rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.logo-text span {
+    background: var(--gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 300;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 700;
+    position: relative;
+    transition: 0.3s;
+}
+
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background: var(--gold-solid);
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #fff;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.cta-outline {
+    border: 1px solid var(--gold-solid);
+    padding: 8px 22px;
+    border-radius: 40px;
+    color: var(--gold-solid) !important;
+}
+
+.cta-outline:hover {
+    background: var(--gold-solid);
+    color: #000 !important;
+}
+
+/* Push content below fixed nav */
+.hero-brutal {
+    margin-top: 100px;
+}
+
+/* =====================================================
+   HERO SECTION
+===================================================== */
+
+.hero-brutal {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 8%;
+    overflow: hidden;
+}
+
+.hero-visual {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.zoom-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.4;
+}
+
+.vignette {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 20%, #080808 90%);
+}
+
+.hero-content {
+    max-width: 900px;
+}
+
+.tagline {
+    color: var(--gold-solid);
+    font-size: 0.8rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+.hero-content h1 {
+    font-size: clamp(4rem, 15vw, 9rem);
+    line-height: 0.85;
+    margin: 20px 0;
+    font-weight: 900;
+    letter-spacing: -4px;
+}
+
+.gold-text {
+    background: var(--gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-content p {
+    color: #888;
+    font-size: 1.1rem;
+    max-width: 500px;
+    font-weight: 300;
+}
+
+.btn-chili {
+    display: inline-block;
+    margin-top: 40px;
+    padding: 20px 50px;
+    background: var(--chili-red);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(153,0,0,0.3);
+    transition: 0.4s;
+}
+
+.btn-chili:hover {
+    transform: translateY(-5px);
+}
+
+/* =====================================================
+   BENTO GRID
+===================================================== */
+
+.bento-wrapper {
+    padding: 100px 5%;
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(300px, auto);
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.bento-box {
+    background: #111;
+    padding: 40px;
+    border: 1px solid #1a1a1a;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.box-label {
+    font-size: 0.6rem;
+    color: #444;
+    letter-spacing: 3px;
+    position: absolute;
+    top: 30px;
+    left: 40px;
+}
+
+.mission-box {
+    grid-column: span 2;
+}
+
+.mission-box h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    margin-top: 20px;
+    line-height: 1.1;
+}
+
+.stat-box {
+    text-align: center;
+    border-color: var(--gold-solid);
+}
+
+.stat-circle {
+    width: 150px;
+    height: 150px;
+    border: 2px solid var(--gold-solid);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.stat-circle .num {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--gold-solid);
+}
+
+.detail-box.gold-tint {
+    border-left: 3px solid var(--gold-solid);
+}
+
+.detail-box h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    margin: 15px 0;
+    color: var(--gold-solid);
+}
+
+.detail-box ul {
+    list-style: none;
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.detail-box ul li {
+    margin-bottom: 10px;
+    border-left: 1px solid rgba(197,160,89,0.3);
+    padding-left: 15px;
+}
+
+/* =====================================================
+   SLIDER
+===================================================== */
+
+.slider-section {
+    padding: 80px 5%;
+    background: #000;
+}
+
+.slider-container {
+    position: relative;
+    height: 650px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: 1s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.5);
+}
+
+.slide-caption {
+    position: absolute;
+    bottom: 60px;
+    left: 60px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    color: #fff;
+    line-height: 1;
+}
+
+.slide-caption span {
+    font-family: 'Montserrat';
+    font-size: 0.8rem;
+    color: var(--gold-solid);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+.slider-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40px;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.slider-nav button {
+    background: rgba(0,0,0,0.5);
+    border: 1px solid var(--gold-solid);
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.slider-nav button:hover {
+    background: var(--gold-solid);
+    color: #000;
+}
+
+/* =====================================================
+   ENROLLMENT FORM
+===================================================== */
+
+.enrollment-section {
+    padding: 120px 5%;
+    background: #000;
+}
+
+.form-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 80px;
+}
+
+.form-title h2 {
+    font-size: 4rem;
+    line-height: 1;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.form-title h2 span {
+    color: var(--chili-red);
+}
+
+.obsidian-form input,
+.obsidian-form select {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #333;
+    padding: 20px 0;
+    color: #fff;
+    margin-bottom: 30px;
+    outline: none;
+    transition: 0.3s;
+    font-family: 'Montserrat';
+}
+
+.obsidian-form input:focus {
+    border-color: var(--gold-solid);
+}
+
+.obsidian-form button {
+    width: 100%;
+    padding: 25px;
+    background: #fff;
+    color: #000;
+    border: none;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.3s;
+    letter-spacing: 2px;
+}
+
+.obsidian-form button:hover {
+    background: var(--gold-solid);
+    transform: translateY(-3px);
+}
+
+/* =====================================================
+   FOOTER (LOGO REMOVED)
+===================================================== */
+
+.main-footer {
+    background: #080808;
+    padding: 100px 5% 150px;
+    border-top: 1px solid #1a1a1a;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Remove footer logo */
+.footer-brand img {
+    display: none;
+}
+
+.footer-brand p {
+    color: #555;
+    margin-top: 25px;
+    font-size: 0.9rem;
+}
+
+.footer-contact h4,
+.footer-social h4 {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--gold-solid);
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+}
+
+.footer-contact p,
+.footer-contact a {
+    color: #777;
+    text-decoration: none;
+    margin-bottom: 15px;
+    display: block;
+    transition: 0.3s;
+}
+
+.footer-contact a:hover {
+    color: #fff;
+}
+
+.social-icons a {
+    font-size: 1.6rem;
+    color: #444;
+    margin-right: 25px;
+    transition: 0.3s;
+}
+
+.social-icons a:hover {
+    color: var(--gold-solid);
+    transform: translateY(-5px);
+}
+
+.footer-bottom {
+    text-align: center;
+    color: #333;
+    font-size: 0.75rem;
+    margin-top: 80px;
+    padding-top: 30px;
+    border-top: 1px solid #111;
+    letter-spacing: 1px;
+}
+
+/* =====================================================
+   MOBILE DOCK
+===================================================== */
+
+.liquid-dock {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 75px;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(197,160,89,0.3);
+    border-radius: 50px;
+    display: none;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+}
+
+.liquid-dock a {
+    color: #666;
+    font-size: 1.5rem;
+    transition: 0.3s;
+}
+
+.liquid-dock a:hover {
+    color: var(--gold-solid);
+}
+
+@media (max-width: 1100px) {
+    .bento-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mission-box {
+        grid-column: span 1;
+    }
+
+    .form-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .liquid-dock {
+        display: flex;
+    }
+
+    /* CONFLICT 1: This hides your nav links on mobile (Correct for your dock approach) */
+    .nav-links {
+        display: none;
+    }
+
+    .hero-content h1 {
+        font-size: 5rem;
+    }
+
+    .slide-caption {
+        font-size: 2.5rem;
+        left: 30px;
+        bottom: 30px;
+    }
+}
+
+/* =====================================================
+   SOCIAL ICON BRAND COLORS
+===================================================== */
+
+/* Base icon styling */
+.social-icons a i,
+.liquid-dock a i {
+    font-size: 1.6rem;
+    transition: 0.3s ease;
+}
+
+/* WHATSAPP */
+.fa-whatsapp {
+    color: #25D366;
+}
+
+.fa-whatsapp:hover {
+    color: #25D366;
+    filter: drop-shadow(0 0 8px rgba(37, 211, 102, 0.7));
+    transform: translateY(-4px);
+}
+
+/* INSTAGRAM (gradient look effect) */
+.fa-instagram {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.fa-instagram:hover {
+    filter: drop-shadow(0 0 8px rgba(220, 39, 67, 0.6));
+    transform: translateY(-4px);
+}
+
+/* TIKTOK */
+.fa-tiktok {
+    color: #00f2ea;
+}
+
+.fa-tiktok:hover {
+    color: #ff0050;
+    filter: drop-shadow(0 0 8px rgba(255, 0, 80, 0.6));
+    transform: translateY(-4px);
+}
+
+/* =====================================================
+   LIQUID DOCK – PREMIUM ICON COLORS
+===================================================== */
+
+.liquid-dock a i {
+    font-size: 1.5rem;
+    transition: 0.3s ease;
+}
+
+/* HOME */
+.fa-home {
+    color: #C5A059;
+}
+
+.fa-home:hover {
+    color: #fff;
+    filter: drop-shadow(0 0 8px rgba(197, 160, 89, 0.7));
+    transform: translateY(-4px);
+}
+
+/* GALLERY */
+.fa-images {
+    color: #888;
+}
+
+.fa-images:hover {
+    color: #C5A059;
+    filter: drop-shadow(0 0 8px rgba(197, 160, 89, 0.6));
+    transform: translateY(-4px);
+}
+
+/* ENROLLMENT */
+.fa-file-signature {
+    color: #990000;
+}
+
+.fa-file-signature:hover {
+    color: #ff2a2a;
+    filter: drop-shadow(0 0 8px rgba(153, 0, 0, 0.7));
+    transform: translateY(-4px);
+}
+ ===========================================
