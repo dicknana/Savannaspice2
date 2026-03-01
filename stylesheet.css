@@ -18,7 +18,7 @@
 
 html, body {
     max-width: 100%;
-    overflow-x: hidden; /* Prevents the horizontal scroll issue */
+    overflow-x: hidden;
     background: var(--deep-obsidian);
     color: #fff;
     font-family: 'Montserrat', sans-serif;
@@ -41,7 +41,7 @@ html, body {
 .loader-hidden { opacity: 0; visibility: hidden; }
 
 /* =====================================================
-   2. NAVIGATION (FIXED HAMBURGER & MENU)
+   2. NAVIGATION & LOGO
 ===================================================== */
 .navbar {
     height: 80px; 
@@ -54,160 +54,228 @@ html, body {
     left: 0;
     z-index: 2000; 
     border-bottom: 1px solid #222;
+    transition: var(--transition);
 }
 
 .nav-container {
     display: flex; 
     justify-content: space-between; 
     align-items: center;
-    width: 90%; 
-    max-width: 1200px; 
+    width: 92%; 
+    max-width: 1400px; 
     margin: 0 auto;
 }
 
-.logo { font-size: 1.6rem; font-weight: 800; letter-spacing: 1px; }
-.logo span { color: var(--primary); }
-
-.hamburger { 
-    cursor: pointer; 
-    z-index: 3000; 
-    display: flex; 
-    flex-direction: column; 
-    gap: 6px; 
+.logo { 
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.4rem; 
+    font-weight: 800; 
+    text-decoration: none;
+    color: #fff;
 }
 
-.line1, .line2, .line3 { 
-    width: 30px; 
-    height: 2px; 
-    background: #fff; 
-    transition: var(--transition); 
+.logo img {
+    height: 45px;
+    width: auto;
+    transition: transform 0.3s ease;
 }
+
+.logo span { 
+    background: var(--gold); 
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+}
+
+/* Scrolled Navbar State */
+.navbar.scrolled { height: 65px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.navbar.scrolled .logo img { height: 35px; }
+
+/* Hamburger Menu */
+.hamburger { cursor: pointer; z-index: 3000; display: flex; flex-direction: column; gap: 6px; }
+.line1, .line2, .line3 { width: 30px; height: 2px; background: #fff; transition: var(--transition); }
 
 .nav-menu {
-    position: fixed; 
-    top: 0; 
-    right: -100%; /* Hidden off-screen */
-    height: 100vh; 
-    width: 100%;
-    background: var(--deep-obsidian); 
-    display: flex; 
-    flex-direction: column;
-    justify-content: center; 
-    align-items: center; 
-    gap: 40px;
-    transition: var(--transition); 
-    z-index: 2500;
-    visibility: hidden; /* Critical Fix: Prevents horizontal scroll */
+    position: fixed; top: 0; right: -100%; height: 100vh; width: 100%;
+    background: var(--deep-obsidian); display: flex; flex-direction: column;
+    justify-content: center; align-items: center; gap: 35px;
+    list-style: none; transition: var(--transition); z-index: 2500; visibility: hidden;
 }
 
-.nav-menu.active { 
-    right: 0; 
-    visibility: visible; 
-}
+.nav-menu.active { right: 0; visibility: visible; }
+
+/* Staggered Fade-In for Menu Links */
+.nav-menu li { opacity: 0; transform: translateY(20px); transition: all 0.5s ease; }
+.nav-menu.active li { opacity: 1; transform: translateY(0); }
+.nav-menu.active li:nth-child(1) { transition-delay: 0.1s; }
+.nav-menu.active li:nth-child(2) { transition-delay: 0.2s; }
+.nav-menu.active li:nth-child(3) { transition-delay: 0.3s; }
+.nav-menu.active li:nth-child(4) { transition-delay: 0.4s; }
 
 .nav-link { 
-    text-decoration: none; 
-    color: #fff; 
-    font-size: 2.2rem; 
-    font-weight: 300; 
-    text-transform: capitalize; 
-    transition: var(--transition); 
+    text-decoration: none; color: #fff; font-size: 1.8rem; 
+    font-weight: 300; text-transform: uppercase; letter-spacing: 3px; 
 }
-
-.nav-link:hover { color: var(--primary); letter-spacing: 4px; }
-
-.btn-primary {
-    background: var(--primary); 
-    color: #000 !important; 
-    padding: 14px 40px;
-    border-radius: 50px; 
-    font-weight: 700; 
-    margin-top: 10px;
-}
+.nav-link:hover { color: var(--gold-solid); }
 
 /* Hamburger Animation to 'X' */
 .hamburger.toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); }
 .hamburger.toggle .line2 { opacity: 0; }
 .hamburger.toggle .line3 { transform: rotate(45deg) translate(-5px, -6px); }
 
-/* =====================================================
-   3. HERO SECTION
-===================================================== */
+/* =============================================
+   3. HERO SECTION (WITH FIXED BG IMAGE)
+============================================= */
 .hero-brutal {
-    height: 100vh; 
-    position: relative; 
-    display: flex; 
-    align-items: center; 
-    padding: 0 8%;
-    margin-top: 0;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 80px 8%;
+    /* This ensures the image covers the area even if the <img> tag is missing */
+    background: linear-gradient(rgba(8, 8, 8, 0.6), rgba(8, 8, 8, 0.9)), 
+                url('fresh1.jpg') no-repeat center center/cover;
+    overflow: hidden;
 }
 
-.hero-visual { position: absolute; inset: 0; z-index: -1; }
-.zoom-bg { width: 100%; height: 100%; object-fit: cover; opacity: 0.4; }
-.vignette { position: absolute; inset: 0; background: radial-gradient(circle, transparent 20%, #080808 90%); }
+.hero-visual { 
+    position: absolute; 
+    inset: 0; 
+    z-index: -1; 
+}
 
+.zoom-bg { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    opacity: 0.4; 
+    /* Optional: subtle zoom animation */
+    animation: slowZoom 20s infinite alternate;
+}
+
+@keyframes slowZoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+.vignette { 
+    position: absolute; 
+    inset: 0; 
+    background: radial-gradient(circle, transparent 20%, #080808 90%); 
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+/* =====================================================
+   HERO TEXT: RED & GOLD MIX
+===================================================== */
 .hero-content h1 {
-    font-size: clamp(3.5rem, 15vw, 8.5rem); 
+    font-size: clamp(3rem, 12vw, 8.5rem); 
     line-height: 0.85; 
-    margin: 20px 0; 
     font-weight: 900; 
     letter-spacing: -4px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: #fff; /* Fallback */
 }
 
-.gold-text { background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+/* The 'JOIN THE' or 'SEASON' in Chili Red */
+.red-text {
+    color: var(--chili-red);
+    text-shadow: 0 0 20px rgba(153, 0, 0, 0.4);
+}
 
+/* The '2026' in Metallic Gold */
+.gold-text {
+    background: var(--gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.2));
+}
+
+/* Mobile Tweak: Ensure the red/gold doesn't look too 'thin' */
+@media (max-width: 600px) {
+    .hero-content h1 {
+        letter-spacing: -1px;
+        line-height: 1;
+    }
+}
+
+/* =====================================================
+   RESORED: BRUTAL CHILI BUTTON
+===================================================== */
 .btn-chili {
     display: inline-block; 
     margin-top: 40px; 
+    /* Original bold padding */
     padding: 20px 50px; 
     background: var(--chili-red);
     color: #fff; 
     text-decoration: none; 
     font-weight: 700; 
     text-transform: uppercase;
+    /* Original aggressive spacing */
     letter-spacing: 3px; 
     border-radius: 4px; 
+    /* Original deep shadow */
     box-shadow: 0 10px 30px rgba(153,0,0,0.3); 
     transition: 0.4s;
+    cursor: pointer;
+    border: none;
 }
 
+.btn-chili:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(153,0,0,0.5);
+    background: #b30000; /* Slightly brighter on hover */
+}
+
+/* Mobile Fix: Prevents the button from being wider than the phone screen */
+@media (max-width: 480px) {
+    .btn-chili {
+        padding: 16px 30px; 
+        letter-spacing: 2px;
+        font-size: 0.9rem;
+        width: auto;
+        text-align: center;
+    }
+}
+
+
+
 /* =====================================================
-   4. BENTO GRID
+   4. BENTO GRID (RESPONSIVE)
 ===================================================== */
-.bento-wrapper { padding: 100px 5%; }
+.bento-wrapper { padding: 80px 5%; }
 .bento-grid {
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr); 
-    grid-auto-rows: minmax(300px, auto);
-    gap: 20px; 
-    max-width: 1400px; 
-    margin: 0 auto;
+    display: grid; grid-template-columns: 1fr; gap: 20px; 
+    max-width: 1400px; margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+    .bento-grid { grid-template-columns: repeat(3, 1fr); grid-auto-rows: minmax(300px, auto); }
+    .mission-box { grid-column: span 2; }
 }
 
 .bento-box { 
-    background: #111; 
-    padding: 40px; 
-    border: 1px solid #1a1a1a; 
-    position: relative; 
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
+    background: #111; padding: 40px; border: 1px solid #1a1a1a; 
+    position: relative; display: flex; flex-direction: column; justify-content: center; 
 }
 
 .box-label { font-size: 0.6rem; color: #444; letter-spacing: 3px; position: absolute; top: 30px; left: 40px; }
 
-.mission-box { grid-column: span 2; }
-.mission-box h2 { font-family: 'Cormorant Garamond', serif; font-size: 3rem; margin-top: 20px; line-height: 1.1; }
+.mission-box h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3rem); margin-top: 20px; line-height: 1.1; }
 
 .stat-circle {
-    width: 150px; height: 150px; 
-    border: 2px solid var(--gold-solid); 
-    border-radius: 50%;
-    margin: 0 auto 20px; 
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    text-align: center;
+    width: 150px; height: 150px; border: 2px solid var(--gold-solid); 
+    border-radius: 50%; margin: 0 auto 20px; display: flex; 
+    flex-direction: column; justify-content: center; text-align: center;
 }
 .stat-circle .num { font-size: 2.5rem; font-weight: 900; color: var(--gold-solid); }
 
@@ -220,29 +288,38 @@ html, body {
    5. SLIDER
 ===================================================== */
 .slider-section { padding: 80px 5%; background: #000; }
-.slider-container { position: relative; height: 400px; width: 100%; max-width: 1400px; margin: 0 auto; overflow: hidden; }
+.slider-container { position: relative; height: 350px; width: 100%; max-width: 1400px; margin: 0 auto; overflow: hidden; }
+
+@media (min-width: 768px) { .slider-container { height: 450px; } }
+
 .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: 1s ease-in-out; }
 .slide.active { opacity: 1; }
 .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
-.slide-caption { position: absolute; bottom: 60px; left: 60px; font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3.5rem); color: #fff; line-height: 1; }
-.slide-caption span { font-family: 'Montserrat'; font-size: 0.8rem; color: var(--gold-solid); text-transform: uppercase; letter-spacing: 5px; }
 
-.slider-nav { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 40px; transform: translateY(-50%); z-index: 10; }
-.slider-nav button { background: rgba(0,0,0,0.5); border: 1px solid var(--gold-solid); color: #fff; width: 60px; height: 60px; border-radius: 50%; cursor: pointer; transition: 0.3s; }
+.slide-caption { 
+    position: absolute; bottom: 40px; left: 40px; 
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 4vw, 3.5rem); 
+    color: #fff; line-height: 1; 
+}
+.slide-caption span { font-family: 'Montserrat'; font-size: 0.8rem; color: var(--gold-solid); text-transform: uppercase; letter-spacing: 5px; display: block; margin-bottom: 10px; }
 
 /* =====================================================
-   6. ENROLLMENT (FIXED LAYOUT)
+   6. ENROLLMENT FORM
 ===================================================== */
-.enrollment-section { padding: 120px 5%; background: #000; display: flex; justify-content: center; }
-.form-container { width: 100%; max-width: 1100px; display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: start; }
-.form-title h2 { font-size: 4rem; line-height: 1; font-family: 'Cormorant Garamond', serif; }
+.enrollment-section { padding: 100px 5%; background: #000; display: flex; justify-content: center; }
+.form-container { width: 100%; max-width: 1100px; display: grid; grid-template-columns: 1fr; gap: 60px; }
+
+@media (min-width: 1024px) { .form-container { grid-template-columns: 1fr 1.5fr; } }
+
+.form-title h2 { font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1; font-family: 'Cormorant Garamond', serif; }
 .form-title h2 span { color: var(--chili-red); }
 
-.input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.input-row { display: grid; grid-template-columns: 1fr; gap: 0; }
+@media (min-width: 600px) { .input-row { grid-template-columns: 1fr 1fr; gap: 20px; } }
+
 .obsidian-form input, .obsidian-form select {
     width: 100%; background: transparent; border: none; border-bottom: 1px solid #333;
-    padding: 20px 0; color: #fff; margin-bottom: 30px; outline: none; transition: 0.3s;
-    font-size: 1rem;
+    padding: 20px 0; color: #fff; margin-bottom: 30px; outline: none; transition: 0.3s; font-size: 1rem;
 }
 .obsidian-form input:focus { border-color: var(--gold-solid); }
 .obsidian-form button {
@@ -270,7 +347,7 @@ html, body {
 .fa-tiktok { color: #00f2ea; }
 .fa-tiktok:hover { color: #ff0050; filter: drop-shadow(0 0 8px rgba(255, 0, 80, 0.6)); transform: translateY(-4px); }
 
-.footer-bottom { text-align: center; color: #333; font-size: 0.75rem; margin-top: 80px; padding-top: 30px; border-top: 1px solid #111; }
+.footer-bottom { text-align: center; color: #fff; font-size: 0.9rem; margin-top: 80px; padding-top: 30px; border-top: 1px solid #222; }
 
 /* =====================================================
    8. LIQUID DOCK
@@ -279,235 +356,10 @@ html, body {
     position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
     width: 300px; height: 75px; background: rgba(10,10,10,0.95);
     backdrop-filter: blur(20px); border: 1px solid rgba(197,160,89,0.3);
-    border-radius: 50px; display: none; justify-content: space-around; align-items: center; z-index: 1000;
-}
-.liquid-dock a i { font-size: 1.5rem; transition: 0.3s ease; }
-.fa-home { color: #C5A059; }
-.fa-images { color: #888; }
-.fa-file-signature { color: #990000; }
-
-/* =====================================================
-   9. RESPONSIVE MEDIA QUERIES
-===================================================== */
-@media (max-width: 1100px) {
-    .bento-grid { grid-template-columns: 1fr; }
-    .mission-box { grid-column: span 1; }
-    .form-container { grid-template-columns: 1fr; gap: 40px; }
-    .liquid-dock { display: flex; }
-    .input-row { grid-template-columns: 1fr; }
+    border-radius: 50px; display: flex; justify-content: space-around; align-items: center; z-index: 1000;
 }
 
-@media (max-width: 600px) {
-    .hero-content h1 { font-size: 3.5rem; }
-    .form-title h2 { font-size: 2.5rem; }
-}
+@media (min-width: 1024px) { .liquid-dock { display: none; } }
 
-
-
-_------------------_
-/* Professional Brand Styling */
-.brand-wrapper {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    transition: var(--transition);
-}
-
-.main-logo {
-    height: 50px; /* Base size */
-    width: auto;
-    transition: transform 0.4s ease, height 0.4s ease;
-}
-
-/* State when the user scrolls down */
-.navbar.scrolled {
-    height: 65px;
-    background: rgba(8, 8, 8, 0.98);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.navbar.scrolled .main-logo {
-    height: 40px; /* Shrinks for a modern feel */
-}
-
-/* Ensure the logo is always on the left and hamburger on the far right */
-.nav-container {
-    justify-content: space-between;
-}
-/* =============================================/* =====================================================
-   NAVBAR BRANDING & LAYOUT
-===================================================== */
-
-/* 1. Main Navbar Container */
-.nav-container {
-    display: flex;
-    justify-content: space-between; /* Pushes Logo left, Hamburger right */
-    align-items: center;
-    width: 92%;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-/* 2. Logo Wrapper (Image + Text) */
-.logo {
-    display: flex;           /* Aligns Image and Text horizontally */
-    align-items: center;
-    gap: 15px;               /* Space between Logo Image and "Savanna Spice" */
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 800;
-    text-transform: capitalize;
-    letter-spacing: 1px;
-    color: #fff;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-/* 3. Logo Image Styling */
-.logo img {
-    height: 45px;            /* Size of your logo.png */
-    width: auto;
-    object-fit: contain;
-    transition: transform 0.3s ease;
-}
-
-/* 4. Branding Colors */
-.logo span {
-    background: var(--gold); /* Uses your existing gold variable */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-left: 5px;
-}
-
-/* 5. Sticky/Scrolled Effect */
-.navbar.scrolled {
-    height: 65px;
-    background: rgba(8, 8, 8, 0.98);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.navbar.scrolled .logo img {
-    height: 35px;            /* Shrinks logo on scroll */
-}
-
-.navbar.scrolled .logo {
-    font-size: 1.2rem;       /* Shrinks text on scroll */
-}
-
-/* 6. Interaction */
-.logo:hover img {
-    transform: scale(1.08);
-    filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.3));
-}
-
-/* 7. Mobile Adjustments */
-@media (max-width: 600px) {
-    .logo {
-        font-size: 1.1rem;
-        gap: 10px;
-    }
-    .logo img {
-        height: 35px;
-    }
-}
-
-.hero-brutal {
-    position: relative;
-    height: 100vh;
-    /* Use this if you don't want to use an <img> tag in HTML */
-    background: linear-gradient(rgba(8, 8, 8, 0.6), rgba(8, 8, 8, 0.9)), 
-                url('fresh1.jpg') no-repeat center center/cover;
-}
-
-
-/* =====================================================
-   PROFESSIONAL MOBILE MENU (FADE-IN & NO BULLETS)
-===================================================== */
-
-/* 1. Reset and Layout */
-.nav-menu {
-    position: fixed;
-    top: 0;
-    right: -100%; /* Hidden by default */
-    height: 100vh;
-    width: 100%;
-    background: #080808;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 35px;
-    list-style: none; /* REMOVES THE DOTS */
-    margin: 0;
-    padding: 0;
-    transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-    z-index: 2500;
-}
-
-/* 2. Triggering the Menu */
-.nav-menu.active {
-    right: 0;
-}
-
-/* 3. The Fade-In Animation Logic */
-.nav-menu li {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.5s ease;
-}
-
-/* When the menu is active, animate the list items */
-.nav-menu.active li {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* 4. Staggered Delay (The "Professional" Touch) */
-/* Each item waits a little longer than the last to appear */
-.nav-menu.active li:nth-child(1) { transition-delay: 0.2s; }
-.nav-menu.active li:nth-child(2) { transition-delay: 0.3s; }
-.nav-menu.active li:nth-child(3) { transition-delay: 0.4s; }
-.nav-menu.active li:nth-child(4) { transition-delay: 0.5s; }
-.nav-menu.active li:nth-child(5) { transition-delay: 0.6s; }
-
-/* 5. Typography */
-.nav-link {
-    text-decoration: none;
-    color: #ffffff;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
-    font-size: 1.8rem;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    position: relative;
-}
-
-/* Subtle Gold Underline on Hover */
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: var(--gold-solid);
-    transition: width 0.3s ease;
-}
-
-.nav-link:hover::after {
-    width: 100%;
-}
-
-.nav-link:hover {
-    color: var(--gold-solid);
-}
-
-
-------------
-@media (min-width: 768px) {
-  /* Styles for tablets and PCs go here */
-  .container {
-    display: flex; /* Switch from a stack to a row */
-  }
-}
-
+.liquid-dock a i { font-size: 1.5rem; transition: 0.3s ease; color: #888; }
+.fa-home { color: #C5A059 !important; }
