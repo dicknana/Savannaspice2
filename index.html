@@ -9,39 +9,41 @@
     <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
-<nav class="nav-ultra">
-    <div class="nav-brand">
-        <a href="#home" class="brand-link">
-            <img src="logo.png" alt="Savanna Spices Logo" class="nav-logo-img">
-            <div class="logo-text"><i>
-                Savanna<span>Spices</span></i>
-            </div>
-        </a>
-    </div>
-    <div class="nav-links">
-        <a href="#bentoo">Mission</a>
-        <a href="#galleryo">Gallery</a>
-        <a href="#enrollmento">Apply</a>
-    </div>
-   
-</nav>
 
-    <header id="home" class="hero-brutal">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><img src="logo.png" alt="">Savanna <span>Spices</span></div>
+            
+            <div class="hamburger" id="hamburger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#mission" class="nav-link">Mission</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li><a href="#enrollment" class="nav-link btn-primary">Connect</a></li>
+            </ul>
+        </div>
+    </nav>
+   <header id="home" class="hero-brutal">
         <div class="hero-visual">
             <div class="vignette"></div>
             <img src="fresh1.jpg" alt="Tanzania Chili" class="zoom-bg">
         </div>
         <div class="hero-content">
             <span class="gold-text">Sourcing • Contract Farming • Export</span>
-            <h1>The Red<br><span class="gold-text">Gold</h1></b>
-            <span class="gold-text">From the fertile soils of Morogoro to the global spice markets.</span>
+            <h1>The Red<br><span class="gold-text">Gold</span></h1>
+            <p class="gold-text">From the fertile soils of Morogoro to the global spice markets.</p>
             <a href="#enrollment" class="btn-chili">Join the 2026 Season</a>
         </div>
     </header>
-
-    <section id="bento" class="bento-wrapper">
+    <section id="about" class="bento-wrapper">
         <div class="bento-grid">
-            <div class="bento-box mission-box">
+            <div id="mission" class="bento-box mission-box">
                 <span class="box-label">01 / WHO WE ARE</span>
                 <h2>Transforming the Chili Value Chain</h2>
                 <p>Founded in Tanzania, Savanna Spices empowers farmers with modern agronomic knowledge and reliable markets.</p>
@@ -98,12 +100,10 @@
             <form id="farmer-form" class="obsidian-form">
                 <div class="input-row">
                     <div class="field">
-                        <label>Full Name</label>
-                        <input type="text" id="farmer_name" placeholder="Name" required>
+                        <input type="text" id="farmer_name" placeholder="Full Name" required>
                     </div>
                     <div class="field">
-                        <label>Phone</label>
-                        <input type="tel" id="farmer_phone" placeholder="WhatsApp" required>
+                        <input type="tel" id="farmer_phone" placeholder="WhatsApp Number" required>
                     </div>
                 </div>
                 <input type="text" id="farm_location" placeholder="Region / District" required>
@@ -119,7 +119,7 @@
     <footer class="main-footer">
         <div class="footer-grid">
             <div class="footer-brand">
-           
+                
                 <p>Exporting Tanzania's finest quality chili to the world.</p>
             </div>
             <div class="footer-contact">
@@ -130,22 +130,21 @@
             <div class="footer-social">
                 <h4>Follow the Harvest</h4>
                 <div class="social-icons">
-                    <a href="https://tiktok.com/@aryd626"><i class="fab fa-tiktok"></i></a>
-                    <a href="https://www.instagram.com/savanna_spices_limited?igsh=a2RocnFxbHJyaGwx"><i class="fab fa-instagram"></i></a>
-                    <a href="https://wa.me/255743228558"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://tiktok.com/@aryd626" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.instagram.com/savanna_spices_limited?igsh=a2RocnFxbHJyaGwx" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/255743228558" target="_blank"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
         </div>
-        <div class="footer-bottom gold-text">
+        <div class="footer-bottom">
             <p>&copy; 2026 Savanna Spices Company Ltd. All Rights Reserved.</p>
         </div>
     </footer>
 
     <div class="liquid-dock">
-        <a href="#home"><i class="fas fa-home"></i></a>
-        <a href="#gallery"><i class="fas fa-images"></i></a>
-        <a href="#enrollment"><i class="fas fa-file-signature"></i></a>
-       
+        <a href="#home" title="Home"><i class="fas fa-home"></i></a>
+        <a href="#gallery" title="Gallery"><i class="fas fa-images"></i></a>
+        <a href="#enrollment" title="Enroll"><i class="fas fa-file-signature"></i></a>
     </div>
 
     <script src="script.js"></script>

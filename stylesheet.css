@@ -1,12 +1,13 @@
 /* =====================================================
-   VARIABLES & BASE
+   1. CORE VARIABLES & RESET
 ===================================================== */
-
 :root {
     --gold: linear-gradient(135deg, #bf953f, #fcf6ba, #aa771c);
     --gold-solid: #C5A059;
     --deep-obsidian: #080808;
     --chili-red: #990000;
+    --primary: #ff9f1c; 
+    --transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 * {
@@ -15,666 +16,498 @@
     box-sizing: border-box;
 }
 
-body {
+html, body {
+    max-width: 100%;
+    overflow-x: hidden; /* Prevents the horizontal scroll issue */
     background: var(--deep-obsidian);
     color: #fff;
     font-family: 'Montserrat', sans-serif;
     line-height: 1.6;
-    overflow-x: hidden;
+    scroll-behavior: smooth;
 }
+
+/* --- Preloader --- */
+#loader {
+    position: fixed; inset: 0; background: #080808; z-index: 9999;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    transition: 0.5s;
+}
+.chili-spinner {
+    width: 40px; height: 40px; border: 2px solid rgba(197, 160, 89, 0.1);
+    border-top: 2px solid var(--chili-red); border-radius: 50%;
+    animation: spin 1s linear infinite; margin-bottom: 20px;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+.loader-hidden { opacity: 0; visibility: hidden; }
 
 /* =====================================================
-   NAVIGATION – ULTRA GLASS
+   2. NAVIGATION (FIXED HAMBURGER & MENU)
 ===================================================== */
-
-.nav-ultra {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 25px 5%;
-    display: flex;
-    justify-content: space-between;
+.navbar {
+    height: 80px; 
+    background: rgba(8, 8, 8, 0.98); 
+    display: flex; 
     align-items: center;
-    background: rgba(8,8,8,0.85);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border-bottom: 1px solid rgba(197,160,89,0.08);
-    transition: 0.4s ease;
-    z-index: 1000;
-}
-
-.nav-scrolled {
-    padding: 12px 5%;
-    background: rgba(0,0,0,0.95);
-    border-bottom: 1px solid var(--gold-solid);
-}
-
-.brand-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    gap: 15px;
-}
-
-.nav-logo-img {
-    height: 45px;
-    width: auto;
-    transition: 0.3s;
-}
-
-.logo-text {
-    font-size: 1.2rem;
-    font-weight: 900;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: #fff;
-}
-
-.logo-text span {
-    background: var(--gold);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 300;
-}
-
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: rgba(255,255,255,0.6);
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-weight: 700;
-    position: relative;
-    transition: 0.3s;
-}
-
-.nav-links a::after {
-    content: "";
-    position: absolute;
-    bottom: -6px;
+    position: fixed; 
+    width: 100%; 
+    top: 0; 
     left: 0;
-    width: 0%;
-    height: 1px;
-    background: var(--gold-solid);
-    transition: 0.3s;
+    z-index: 2000; 
+    border-bottom: 1px solid #222;
 }
 
-.nav-links a:hover {
-    color: #fff;
+.nav-container {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    width: 90%; 
+    max-width: 1200px; 
+    margin: 0 auto;
 }
 
-.nav-links a:hover::after {
+.logo { font-size: 1.6rem; font-weight: 800; letter-spacing: 1px; }
+.logo span { color: var(--primary); }
+
+.hamburger { 
+    cursor: pointer; 
+    z-index: 3000; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 6px; 
+}
+
+.line1, .line2, .line3 { 
+    width: 30px; 
+    height: 2px; 
+    background: #fff; 
+    transition: var(--transition); 
+}
+
+.nav-menu {
+    position: fixed; 
+    top: 0; 
+    right: -100%; /* Hidden off-screen */
+    height: 100vh; 
     width: 100%;
+    background: var(--deep-obsidian); 
+    display: flex; 
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+    gap: 40px;
+    transition: var(--transition); 
+    z-index: 2500;
+    visibility: hidden; /* Critical Fix: Prevents horizontal scroll */
 }
 
-.cta-outline {
-    border: 1px solid var(--gold-solid);
-    padding: 8px 22px;
-    border-radius: 40px;
-    color: var(--gold-solid) !important;
+.nav-menu.active { 
+    right: 0; 
+    visibility: visible; 
 }
 
-.cta-outline:hover {
-    background: var(--gold-solid);
-    color: #000 !important;
+.nav-link { 
+    text-decoration: none; 
+    color: #fff; 
+    font-size: 2.2rem; 
+    font-weight: 300; 
+    text-transform: capitalize; 
+    transition: var(--transition); 
 }
 
-/* Push content below fixed nav */
-.hero-brutal {
-    margin-top: 100px;
+.nav-link:hover { color: var(--primary); letter-spacing: 4px; }
+
+.btn-primary {
+    background: var(--primary); 
+    color: #000 !important; 
+    padding: 14px 40px;
+    border-radius: 50px; 
+    font-weight: 700; 
+    margin-top: 10px;
 }
+
+/* Hamburger Animation to 'X' */
+.hamburger.toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); }
+.hamburger.toggle .line2 { opacity: 0; }
+.hamburger.toggle .line3 { transform: rotate(45deg) translate(-5px, -6px); }
 
 /* =====================================================
-   HERO SECTION
+   3. HERO SECTION
 ===================================================== */
-
 .hero-brutal {
-    height: 100vh;
-    position: relative;
-    display: flex;
-    align-items: center;
+    height: 100vh; 
+    position: relative; 
+    display: flex; 
+    align-items: center; 
     padding: 0 8%;
-    overflow: hidden;
+    margin-top: 0;
 }
 
-.hero-visual {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}
-
-.zoom-bg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.4;
-}
-
-.vignette {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, transparent 20%, #080808 90%);
-}
-
-.hero-content {
-    max-width: 900px;
-}
-
-.tagline {
-    color: var(--gold-solid);
-    font-size: 0.8rem;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-}
+.hero-visual { position: absolute; inset: 0; z-index: -1; }
+.zoom-bg { width: 100%; height: 100%; object-fit: cover; opacity: 0.4; }
+.vignette { position: absolute; inset: 0; background: radial-gradient(circle, transparent 20%, #080808 90%); }
 
 .hero-content h1 {
-    font-size: clamp(4rem, 15vw, 9rem);
-    line-height: 0.85;
-    margin: 20px 0;
-    font-weight: 900;
+    font-size: clamp(3.5rem, 15vw, 8.5rem); 
+    line-height: 0.85; 
+    margin: 20px 0; 
+    font-weight: 900; 
     letter-spacing: -4px;
 }
 
-.gold-text {
-    background: var(--gold);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.hero-content p {
-    color: #888;
-    font-size: 1.1rem;
-    max-width: 500px;
-    font-weight: 300;
-}
+.gold-text { background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
 .btn-chili {
-    display: inline-block;
-    margin-top: 40px;
-    padding: 20px 50px;
+    display: inline-block; 
+    margin-top: 40px; 
+    padding: 20px 50px; 
     background: var(--chili-red);
-    color: #fff;
-    text-decoration: none;
-    font-weight: 700;
+    color: #fff; 
+    text-decoration: none; 
+    font-weight: 700; 
     text-transform: uppercase;
-    letter-spacing: 3px;
-    border-radius: 4px;
-    box-shadow: 0 10px 30px rgba(153,0,0,0.3);
+    letter-spacing: 3px; 
+    border-radius: 4px; 
+    box-shadow: 0 10px 30px rgba(153,0,0,0.3); 
     transition: 0.4s;
 }
 
-.btn-chili:hover {
-    transform: translateY(-5px);
-}
-
 /* =====================================================
-   BENTO GRID
+   4. BENTO GRID
 ===================================================== */
-
-.bento-wrapper {
-    padding: 100px 5%;
-}
-
+.bento-wrapper { padding: 100px 5%; }
 .bento-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
     grid-auto-rows: minmax(300px, auto);
-    gap: 20px;
-    max-width: 1400px;
+    gap: 20px; 
+    max-width: 1400px; 
     margin: 0 auto;
 }
 
-.bento-box {
-    background: #111;
-    padding: 40px;
-    border: 1px solid #1a1a1a;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.bento-box { 
+    background: #111; 
+    padding: 40px; 
+    border: 1px solid #1a1a1a; 
+    position: relative; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
 }
 
-.box-label {
-    font-size: 0.6rem;
-    color: #444;
-    letter-spacing: 3px;
-    position: absolute;
-    top: 30px;
-    left: 40px;
-}
+.box-label { font-size: 0.6rem; color: #444; letter-spacing: 3px; position: absolute; top: 30px; left: 40px; }
 
-.mission-box {
-    grid-column: span 2;
-}
-
-.mission-box h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3rem;
-    margin-top: 20px;
-    line-height: 1.1;
-}
-
-.stat-box {
-    text-align: center;
-    border-color: var(--gold-solid);
-}
+.mission-box { grid-column: span 2; }
+.mission-box h2 { font-family: 'Cormorant Garamond', serif; font-size: 3rem; margin-top: 20px; line-height: 1.1; }
 
 .stat-circle {
-    width: 150px;
-    height: 150px;
-    border: 2px solid var(--gold-solid);
+    width: 150px; height: 150px; 
+    border: 2px solid var(--gold-solid); 
     border-radius: 50%;
-    margin: 0 auto 20px;
+    margin: 0 auto 20px; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    text-align: center;
+}
+.stat-circle .num { font-size: 2.5rem; font-weight: 900; color: var(--gold-solid); }
+
+.detail-box.gold-tint { border-left: 3px solid var(--gold-solid); }
+.detail-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin: 15px 0; color: var(--gold-solid); }
+.detail-box ul { list-style: none; font-size: 0.85rem; color: #999; }
+.detail-box ul li { margin-bottom: 10px; border-left: 1px solid rgba(197,160,89,0.3); padding-left: 15px; }
+
+/* =====================================================
+   5. SLIDER
+===================================================== */
+.slider-section { padding: 80px 5%; background: #000; }
+.slider-container { position: relative; height: 400px; width: 100%; max-width: 1400px; margin: 0 auto; overflow: hidden; }
+.slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: 1s ease-in-out; }
+.slide.active { opacity: 1; }
+.slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
+.slide-caption { position: absolute; bottom: 60px; left: 60px; font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3.5rem); color: #fff; line-height: 1; }
+.slide-caption span { font-family: 'Montserrat'; font-size: 0.8rem; color: var(--gold-solid); text-transform: uppercase; letter-spacing: 5px; }
+
+.slider-nav { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 40px; transform: translateY(-50%); z-index: 10; }
+.slider-nav button { background: rgba(0,0,0,0.5); border: 1px solid var(--gold-solid); color: #fff; width: 60px; height: 60px; border-radius: 50%; cursor: pointer; transition: 0.3s; }
+
+/* =====================================================
+   6. ENROLLMENT (FIXED LAYOUT)
+===================================================== */
+.enrollment-section { padding: 120px 5%; background: #000; display: flex; justify-content: center; }
+.form-container { width: 100%; max-width: 1100px; display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: start; }
+.form-title h2 { font-size: 4rem; line-height: 1; font-family: 'Cormorant Garamond', serif; }
+.form-title h2 span { color: var(--chili-red); }
+
+.input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.obsidian-form input, .obsidian-form select {
+    width: 100%; background: transparent; border: none; border-bottom: 1px solid #333;
+    padding: 20px 0; color: #fff; margin-bottom: 30px; outline: none; transition: 0.3s;
+    font-size: 1rem;
+}
+.obsidian-form input:focus { border-color: var(--gold-solid); }
+.obsidian-form button {
+    width: 100%; padding: 25px; background: #fff; color: #000; border: none; font-weight: 900;
+    text-transform: uppercase; cursor: pointer; transition: 0.3s; letter-spacing: 2px;
+}
+.obsidian-form button:hover { background: var(--gold-solid); transform: translateY(-3px); }
+
+/* =====================================================
+   7. FOOTER & SOCIALS
+===================================================== */
+.main-footer { background: #080808; padding: 100px 5% 150px; border-top: 1px solid #1a1a1a; }
+.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 60px; max-width: 1400px; margin: 0 auto; }
+.footer-contact h4, .footer-social h4 { font-family: 'Cormorant Garamond', serif; color: var(--gold-solid); font-size: 1.6rem; margin-bottom: 25px; }
+.footer-contact p, .footer-contact a { color: #777; text-decoration: none; margin-bottom: 15px; display: block; transition: 0.3s; }
+
+.social-icons a i { font-size: 1.6rem; transition: 0.3s ease; margin-right: 25px; }
+.fa-whatsapp { color: #25D366; }
+.fa-whatsapp:hover { filter: drop-shadow(0 0 8px rgba(37, 211, 102, 0.7)); transform: translateY(-4px); }
+.fa-instagram {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.fa-instagram:hover { filter: drop-shadow(0 0 8px rgba(220, 39, 67, 0.6)); transform: translateY(-4px); }
+.fa-tiktok { color: #00f2ea; }
+.fa-tiktok:hover { color: #ff0050; filter: drop-shadow(0 0 8px rgba(255, 0, 80, 0.6)); transform: translateY(-4px); }
+
+.footer-bottom { text-align: center; color: #333; font-size: 0.75rem; margin-top: 80px; padding-top: 30px; border-top: 1px solid #111; }
+
+/* =====================================================
+   8. LIQUID DOCK
+===================================================== */
+.liquid-dock {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+    width: 300px; height: 75px; background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(20px); border: 1px solid rgba(197,160,89,0.3);
+    border-radius: 50px; display: none; justify-content: space-around; align-items: center; z-index: 1000;
+}
+.liquid-dock a i { font-size: 1.5rem; transition: 0.3s ease; }
+.fa-home { color: #C5A059; }
+.fa-images { color: #888; }
+.fa-file-signature { color: #990000; }
+
+/* =====================================================
+   9. RESPONSIVE MEDIA QUERIES
+===================================================== */
+@media (max-width: 1100px) {
+    .bento-grid { grid-template-columns: 1fr; }
+    .mission-box { grid-column: span 1; }
+    .form-container { grid-template-columns: 1fr; gap: 40px; }
+    .liquid-dock { display: flex; }
+    .input-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+    .hero-content h1 { font-size: 3.5rem; }
+    .form-title h2 { font-size: 2.5rem; }
+}
+
+
+
+_------------------_
+/* Professional Brand Styling */
+.brand-wrapper {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.main-logo {
+    height: 50px; /* Base size */
+    width: auto;
+    transition: transform 0.4s ease, height 0.4s ease;
+}
+
+/* State when the user scrolls down */
+.navbar.scrolled {
+    height: 65px;
+    background: rgba(8, 8, 8, 0.98);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.navbar.scrolled .main-logo {
+    height: 40px; /* Shrinks for a modern feel */
+}
+
+/* Ensure the logo is always on the left and hamburger on the far right */
+.nav-container {
+    justify-content: space-between;
+}
+/* =============================================/* =====================================================
+   NAVBAR BRANDING & LAYOUT
+===================================================== */
+
+/* 1. Main Navbar Container */
+.nav-container {
+    display: flex;
+    justify-content: space-between; /* Pushes Logo left, Hamburger right */
+    align-items: center;
+    width: 92%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* 2. Logo Wrapper (Image + Text) */
+.logo {
+    display: flex;           /* Aligns Image and Text horizontally */
+    align-items: center;
+    gap: 15px;               /* Space between Logo Image and "Savanna Spice" */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    color: #fff;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+/* 3. Logo Image Styling */
+.logo img {
+    height: 45px;            /* Size of your logo.png */
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+/* 4. Branding Colors */
+.logo span {
+    background: var(--gold); /* Uses your existing gold variable */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-left: 5px;
+}
+
+/* 5. Sticky/Scrolled Effect */
+.navbar.scrolled {
+    height: 65px;
+    background: rgba(8, 8, 8, 0.98);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.navbar.scrolled .logo img {
+    height: 35px;            /* Shrinks logo on scroll */
+}
+
+.navbar.scrolled .logo {
+    font-size: 1.2rem;       /* Shrinks text on scroll */
+}
+
+/* 6. Interaction */
+.logo:hover img {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.3));
+}
+
+/* 7. Mobile Adjustments */
+@media (max-width: 600px) {
+    .logo {
+        font-size: 1.1rem;
+        gap: 10px;
+    }
+    .logo img {
+        height: 35px;
+    }
+}
+
+.hero-brutal {
+    position: relative;
+    height: 100vh;
+    /* Use this if you don't want to use an <img> tag in HTML */
+    background: linear-gradient(rgba(8, 8, 8, 0.6), rgba(8, 8, 8, 0.9)), 
+                url('fresh1.jpg') no-repeat center center/cover;
+}
+
+
+/* =====================================================
+   PROFESSIONAL MOBILE MENU (FADE-IN & NO BULLETS)
+===================================================== */
+
+/* 1. Reset and Layout */
+.nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Hidden by default */
+    height: 100vh;
+    width: 100%;
+    background: #080808;
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-.stat-circle .num {
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: var(--gold-solid);
-}
-
-.detail-box.gold-tint {
-    border-left: 3px solid var(--gold-solid);
-}
-
-.detail-box h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.8rem;
-    margin: 15px 0;
-    color: var(--gold-solid);
-}
-
-.detail-box ul {
-    list-style: none;
-    font-size: 0.85rem;
-    color: #999;
-}
-
-.detail-box ul li {
-    margin-bottom: 10px;
-    border-left: 1px solid rgba(197,160,89,0.3);
-    padding-left: 15px;
-}
-
-/* =====================================================
-   SLIDER
-===================================================== */
-
-.slider-section {
-    padding: 80px 5%;
-    background: #000;
-}
-
-.slider-container {
-    position: relative;
-    height: 650px;
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    overflow: hidden;
-}
-
-.slide {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: 1s ease-in-out;
-}
-
-.slide.active {
-    opacity: 1;
-}
-
-.slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.5);
-}
-
-.slide-caption {
-    position: absolute;
-    bottom: 60px;
-    left: 60px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3.5rem;
-    color: #fff;
-    line-height: 1;
-}
-
-.slide-caption span {
-    font-family: 'Montserrat';
-    font-size: 0.8rem;
-    color: var(--gold-solid);
-    text-transform: uppercase;
-    letter-spacing: 5px;
-}
-
-.slider-nav {
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 40px;
-    transform: translateY(-50%);
-    z-index: 10;
-}
-
-.slider-nav button {
-    background: rgba(0,0,0,0.5);
-    border: 1px solid var(--gold-solid);
-    color: #fff;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.slider-nav button:hover {
-    background: var(--gold-solid);
-    color: #000;
-}
-
-/* =====================================================
-   ENROLLMENT FORM
-===================================================== */
-
-.enrollment-section {
-    padding: 120px 5%;
-    background: #000;
-}
-
-.form-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 80px;
-}
-
-.form-title h2 {
-    font-size: 4rem;
-    line-height: 1;
-    font-family: 'Cormorant Garamond', serif;
-}
-
-.form-title h2 span {
-    color: var(--chili-red);
-}
-
-.obsidian-form input,
-.obsidian-form select {
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid #333;
-    padding: 20px 0;
-    color: #fff;
-    margin-bottom: 30px;
-    outline: none;
-    transition: 0.3s;
-    font-family: 'Montserrat';
-}
-
-.obsidian-form input:focus {
-    border-color: var(--gold-solid);
-}
-
-.obsidian-form button {
-    width: 100%;
-    padding: 25px;
-    background: #fff;
-    color: #000;
-    border: none;
-    font-weight: 900;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: 0.3s;
-    letter-spacing: 2px;
-}
-
-.obsidian-form button:hover {
-    background: var(--gold-solid);
-    transform: translateY(-3px);
-}
-
-/* =====================================================
-   FOOTER (LOGO REMOVED)
-===================================================== */
-
-.main-footer {
-    background: #080808;
-    padding: 100px 5% 150px;
-    border-top: 1px solid #1a1a1a;
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 60px;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-/* Remove footer logo */
-.footer-brand img {
-    display: none;
-}
-
-.footer-brand p {
-    color: #555;
-    margin-top: 25px;
-    font-size: 0.9rem;
-}
-
-.footer-contact h4,
-.footer-social h4 {
-    font-family: 'Cormorant Garamond', serif;
-    color: var(--gold-solid);
-    font-size: 1.6rem;
-    margin-bottom: 25px;
-}
-
-.footer-contact p,
-.footer-contact a {
-    color: #777;
-    text-decoration: none;
-    margin-bottom: 15px;
-    display: block;
-    transition: 0.3s;
-}
-
-.footer-contact a:hover {
-    color: #fff;
-}
-
-.social-icons a {
-    font-size: 1.6rem;
-    color: #444;
-    margin-right: 25px;
-    transition: 0.3s;
-}
-
-.social-icons a:hover {
-    color: var(--gold-solid);
-    transform: translateY(-5px);
-}
-
-.footer-bottom {
-    text-align: center;
-    color: #333;
-    font-size: 0.75rem;
-    margin-top: 80px;
-    padding-top: 30px;
-    border-top: 1px solid #111;
-    letter-spacing: 1px;
-}
-
-/* =====================================================
-   MOBILE DOCK
-===================================================== */
-
-.liquid-dock {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 300px;
-    height: 75px;
-    background: rgba(10,10,10,0.95);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(197,160,89,0.3);
-    border-radius: 50px;
-    display: none;
-    justify-content: space-around;
     align-items: center;
-    z-index: 1000;
+    gap: 35px;
+    list-style: none; /* REMOVES THE DOTS */
+    margin: 0;
+    padding: 0;
+    transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: 2500;
 }
 
-.liquid-dock a {
-    color: #666;
-    font-size: 1.5rem;
-    transition: 0.3s;
+/* 2. Triggering the Menu */
+.nav-menu.active {
+    right: 0;
 }
 
-.liquid-dock a:hover {
+/* 3. The Fade-In Animation Logic */
+.nav-menu li {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+/* When the menu is active, animate the list items */
+.nav-menu.active li {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 4. Staggered Delay (The "Professional" Touch) */
+/* Each item waits a little longer than the last to appear */
+.nav-menu.active li:nth-child(1) { transition-delay: 0.2s; }
+.nav-menu.active li:nth-child(2) { transition-delay: 0.3s; }
+.nav-menu.active li:nth-child(3) { transition-delay: 0.4s; }
+.nav-menu.active li:nth-child(4) { transition-delay: 0.5s; }
+.nav-menu.active li:nth-child(5) { transition-delay: 0.6s; }
+
+/* 5. Typography */
+.nav-link {
+    text-decoration: none;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    position: relative;
+}
+
+/* Subtle Gold Underline on Hover */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold-solid);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-link:hover {
     color: var(--gold-solid);
 }
 
-@media (max-width: 1100px) {
-    .bento-grid {
-        grid-template-columns: 1fr;
-    }
 
-    .mission-box {
-        grid-column: span 1;
-    }
-
-    .form-container {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-
-    .liquid-dock {
-        display: flex;
-    }
-
-    /* CONFLICT 1: This hides your nav links on mobile (Correct for your dock approach) */
-    .nav-links {
-        display: none;
-    }
-
-    .hero-content h1 {
-        font-size: 5rem;
-    }
-
-    .slide-caption {
-        font-size: 2.5rem;
-        left: 30px;
-        bottom: 30px;
-    }
+------------
+@media (min-width: 768px) {
+  /* Styles for tablets and PCs go here */
+  .container {
+    display: flex; /* Switch from a stack to a row */
+  }
 }
 
-/* =====================================================
-   SOCIAL ICON BRAND COLORS
-===================================================== */
-
-/* Base icon styling */
-.social-icons a i,
-.liquid-dock a i {
-    font-size: 1.6rem;
-    transition: 0.3s ease;
-}
-
-/* WHATSAPP */
-.fa-whatsapp {
-    color: #25D366;
-}
-
-.fa-whatsapp:hover {
-    color: #25D366;
-    filter: drop-shadow(0 0 8px rgba(37, 211, 102, 0.7));
-    transform: translateY(-4px);
-}
-
-/* INSTAGRAM (gradient look effect) */
-.fa-instagram {
-    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.fa-instagram:hover {
-    filter: drop-shadow(0 0 8px rgba(220, 39, 67, 0.6));
-    transform: translateY(-4px);
-}
-
-/* TIKTOK */
-.fa-tiktok {
-    color: #00f2ea;
-}
-
-.fa-tiktok:hover {
-    color: #ff0050;
-    filter: drop-shadow(0 0 8px rgba(255, 0, 80, 0.6));
-    transform: translateY(-4px);
-}
-
-/* =====================================================
-   LIQUID DOCK – PREMIUM ICON COLORS
-===================================================== */
-
-.liquid-dock a i {
-    font-size: 1.5rem;
-    transition: 0.3s ease;
-}
-
-/* HOME */
-.fa-home {
-    color: #C5A059;
-}
-
-.fa-home:hover {
-    color: #fff;
-    filter: drop-shadow(0 0 8px rgba(197, 160, 89, 0.7));
-    transform: translateY(-4px);
-}
-
-/* GALLERY */
-.fa-images {
-    color: #888;
-}
-
-.fa-images:hover {
-    color: #C5A059;
-    filter: drop-shadow(0 0 8px rgba(197, 160, 89, 0.6));
-    transform: translateY(-4px);
-}
-
-/* ENROLLMENT */
-.fa-file-signature {
-    color: #990000;
-}
-
-.fa-file-signature:hover {
-    color: #ff2a2a;
-    filter: drop-shadow(0 0 8px rgba(153, 0, 0, 0.7));
-    transform: translateY(-4px);
-}
- ===========================================
