@@ -1,119 +1,95 @@
-// 1. Loader Logic (Runs immediately when window is ready)
+// 1. Loader Logic
 window.addEventListener('load', () => {
     const loader = document.getElementById('loader');
-    if (loader) {
-        setTimeout(() => {
-            loader.classList.add('loader-hidden');
-        }, 1000);
-    }
+    if (loader) setTimeout(() => loader.classList.add('loader-hidden'), 1000);
 });
 
-// 2. All Core Logic (Runs once DOM is loaded)
+// 2. Main Logic
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- WHATSAPP FORM LOGIC ---
+    // --- WHATSAPP FORM ---
     const farmerForm = document.getElementById('farmer-form');
     if (farmerForm) {
-        farmerForm.addEventListener('submit', function(e) {
+        farmerForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const name = document.getElementById('farmer_name').value;
-            const phone = document.getElementById('farmer_phone').value;
-            const loc = document.getElementById('farm_location').value;
-            const role = document.getElementById('user_type').value;
-
-            const message = `*🌱 SAVANNA SPICES PORTAL*%0A*Role:* ${role}%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Location:* ${loc}`;
+            const vals = ['farmer_name', 'farmer_phone', 'farm_location', 'user_type'].map(id => document.getElementById(id).value);
+            const message = `*🌱 SAVANNA SPICES PORTAL*%0A*Role:* ${vals[3]}%0A*Name:* ${vals[0]}%0A*Phone:* ${vals[1]}%0A*Location:* ${vals[2]}`;
             window.open(`https://wa.me/255743228558?text=${message}`, '_blank');
         });
     }
 
-    // --- MOBILE MENU LOGIC ---
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('nav-menu');
-
+    // --- MOBILE MENU ---
+    const [hamburger, navMenu] = [document.getElementById('hamburger'), document.getElementById('nav-menu')];
     if (hamburger && navMenu) {
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
+        const toggleMenu = () => {
+            const isActive = navMenu.classList.toggle('active');
             hamburger.classList.toggle('toggle');
-            
-            // Toggle body scroll to prevent background scrolling when menu is open
-            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'initial';
-        });
-
-        // Close menu when links are clicked
-        const navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                hamburger.classList.remove('toggle');
-                document.body.style.overflow = 'initial';
-            });
-        });
+            document.body.style.overflow = isActive ? 'hidden' : 'initial';
+        };
+        hamburger.addEventListener('click', toggleMenu);
+        document.querySelectorAll('.nav-link').forEach(link => link.addEventListener('click', toggleMenu));
     }
 
-    // --- IMAGE SLIDER ---
+    // --- SLIDER ---
     const slides = document.querySelectorAll('.slide');
-    const nextBtn = document.getElementById('nextBtn');
-    const prevBtn = document.getElementById('prevBtn');
-    let currentSlide = 0;
-
     if (slides.length > 0) {
-        function showSlide(index) {
-            slides.forEach(s => s.classList.remove('active'));
-            slides[index].classList.add('active');
-        }
-
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                currentSlide = (currentSlide + 1) % slides.length;
-                showSlide(currentSlide);
-            });
-        }
-
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-                showSlide(currentSlide);
-            });
-        }
-
-        // Auto-play
-        setInterval(() => {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-        }, 5000);
+        let current = 0;
+        const move = (dir) => {
+            slides[current].classList.remove('active');
+            current = (current + dir + slides.length) % slides.length;
+            slides[current].classList.add('active');
+        };
+        document.getElementById('nextBtn')?.addEventListener('click', () => move(1));
+        document.getElementById('prevBtn')?.addEventListener('click', () => move(-1));
+        setInterval(() => move(1), 5000);
     }
 
-    // --- SCROLL EFFECTS (Navbar Shrink & Liquid Dock) ---
-    window.addEventListener('scroll', () => {
-        const nav = document.querySelector('.navbar');
-        const sections = document.querySelectorAll("section, header");
-        const dockItems = document.querySelectorAll(".liquid-dock a");
-        let currentSectionId = "";
+    // --- ELITE GALLERY & SCROLL EFFECTS ---
+    const eliteSection = document.querySelector('.elite-gallery');
+    const eliteItems = document.querySelectorAll('.item');
+    const nav = document.querySelector('.navbar');
+    const sections = document.querySelectorAll("section, header");
+    const dockItems = document.querySelectorAll(".liquid-dock a");
+    let isZoomed = false;
 
-        // 1. Professional Navbar Shrink
-        if (nav) {
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        }
-
-        // 2. Liquid Dock Highlight
-        sections.forEach((section) => {
-            const sectionTop = section.offsetTop;
-            if (window.pageYOffset >= sectionTop - 250) {
-                currentSectionId = section.getAttribute("id");
-            }
-        });
-
-        dockItems.forEach((item) => {
-            item.style.color = "#555"; // Default inactive color
-            if (currentSectionId && item.getAttribute("href").includes(currentSectionId)) {
-                item.style.color = "#C5A059"; // Savanna Gold active color
-            }
+    // Zoom Toggle
+    eliteItems.forEach(item => {
+        item.addEventListener('click', () => {
+            isZoomed = !isZoomed;
+            item.classList.toggle('zoomed', isZoomed);
+            eliteSection.classList.toggle('has-zoomed', isZoomed);
         });
     });
-});
 
-  
+    window.addEventListener('scroll', () => {
+        const sTop = window.scrollY;
+
+        // Navbar & Dock Logic
+        if (nav) nav.classList.toggle('scrolled', sTop > 50);
+        let currId = "";
+        sections.forEach(s => { if (sTop >= s.offsetTop - 250) currId = s.id; });
+        dockItems.forEach(item => item.style.color = (currId && item.getAttribute("href").includes(currId)) ? "#C5A059" : "#555");
+
+        // --- 3D Spread Logic ---
+        if (eliteSection && !isZoomed) {
+            const sOffset = eliteSection.offsetTop;
+            const sHeight = eliteSection.offsetHeight;
+            
+            // This math makes the animation reach 100% (frac = 1) 
+            // much faster, so you don't scroll through "empty" space.
+            let frac = (sTop - sOffset) / (sHeight - window.innerHeight);
+            frac = Math.max(0, Math.min(1, frac));
+
+            eliteItems.forEach((item, i) => {
+                const off = i - (eliteItems.length - 1) / 2;
+                
+                const x = off * (frac * 400); 
+                const z = Math.abs(off) * (frac * -150);
+                const r = off * (frac * 18);
+                
+                item.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${r}deg)`;
+                // Removed the transparency logic so they stay solid
+                item.style.opacity = "1"; 
+            });
+        }
+    });
+});
