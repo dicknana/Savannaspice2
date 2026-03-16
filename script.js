@@ -1,11 +1,41 @@
-// 1. Loader Logic
-window.addEventListener('load', () => {
-    const loader = document.getElementById('loader');
-    if (loader) setTimeout(() => loader.classList.add('loader-hidden'), 1000);
+/* =====================================================
+   1. GLOBAL FUNCTIONS (Must be outside for HTML to see)
+===================================================== */
+function toggleModal(id) {
+    const modal = document.getElementById(id);
+    if (!modal) return;
+
+    // Check if it's currently hidden or shown
+    const isHidden = modal.style.display === "none" || modal.style.display === "";
+    
+    if (isHidden) {
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden"; // Stop background scroll
+    } else {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto"; // Re-enable scroll
+    }
+}
+
+// Close modal if user clicks the dark background
+window.addEventListener('click', (e) => {
+    if (e.target.classList.contains('spice-modal')) {
+        e.target.style.display = "none";
+        document.body.style.overflow = "auto";
+    }
 });
 
-// 2. Main Logic
+/* =====================================================
+   2. MAIN LOGIC (Inside DOMContentLoaded)
+===================================================== */
 document.addEventListener('DOMContentLoaded', () => {
+
+    // --- LOADER ---
+    const loader = document.getElementById('loader');
+    if (loader) {
+        setTimeout(() => loader.classList.add('loader-hidden'), 1000);
+    }
+
     // --- WHATSAPP FORM ---
     const farmerForm = document.getElementById('farmer-form');
     if (farmerForm) {
@@ -18,7 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- MOBILE MENU ---
-    const [hamburger, navMenu] = [document.getElementById('hamburger'), document.getElementById('nav-menu')];
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
     if (hamburger && navMenu) {
         const toggleMenu = () => {
             const isActive = navMenu.classList.toggle('active');
@@ -27,20 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         hamburger.addEventListener('click', toggleMenu);
         document.querySelectorAll('.nav-link').forEach(link => link.addEventListener('click', toggleMenu));
-    }
-
-    // --- SLIDER ---
-    const slides = document.querySelectorAll('.slide');
-    if (slides.length > 0) {
-        let current = 0;
-        const move = (dir) => {
-            slides[current].classList.remove('active');
-            current = (current + dir + slides.length) % slides.length;
-            slides[current].classList.add('active');
-        };
-        document.getElementById('nextBtn')?.addEventListener('click', () => move(1));
-        document.getElementById('prevBtn')?.addEventListener('click', () => move(-1));
-        setInterval(() => move(1), 5000);
     }
 
     // --- ELITE GALLERY & SCROLL EFFECTS ---
@@ -56,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         item.addEventListener('click', () => {
             isZoomed = !isZoomed;
             item.classList.toggle('zoomed', isZoomed);
-            eliteSection.classList.toggle('has-zoomed', isZoomed);
+            if (eliteSection) eliteSection.classList.toggle('has-zoomed', isZoomed);
         });
     });
 
@@ -67,27 +84,26 @@ document.addEventListener('DOMContentLoaded', () => {
         if (nav) nav.classList.toggle('scrolled', sTop > 50);
         let currId = "";
         sections.forEach(s => { if (sTop >= s.offsetTop - 250) currId = s.id; });
-        dockItems.forEach(item => item.style.color = (currId && item.getAttribute("href").includes(currId)) ? "#C5A059" : "#555");
+        dockItems.forEach(item => {
+            const href = item.getAttribute("href");
+            item.style.color = (currId && href.includes(currId)) ? "#C5A059" : "#555";
+        });
 
         // --- 3D Spread Logic ---
         if (eliteSection && !isZoomed) {
             const sOffset = eliteSection.offsetTop;
             const sHeight = eliteSection.offsetHeight;
             
-            // This math makes the animation reach 100% (frac = 1) 
-            // much faster, so you don't scroll through "empty" space.
-            let frac = (sTop - sOffset) / (sHeight - window.innerHeight);
+            // Speed up factor (* 1.3) to prevent black space feel
+            let frac = ((sTop - sOffset) / (sHeight - window.innerHeight)) * 1.3;
             frac = Math.max(0, Math.min(1, frac));
 
             eliteItems.forEach((item, i) => {
                 const off = i - (eliteItems.length - 1) / 2;
-                
                 const x = off * (frac * 400); 
                 const z = Math.abs(off) * (frac * -150);
                 const r = off * (frac * 18);
-                
                 item.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${r}deg)`;
-                // Removed the transparency logic so they stay solid
                 item.style.opacity = "1"; 
             });
         }

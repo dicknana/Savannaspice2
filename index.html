@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="stylesheet.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
-
 </head>
 <body>
 
@@ -26,12 +24,13 @@
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#mission" class="nav-link">Mission</a></li>
+                <li><a href="#process-trigger" class="nav-link">Process</a></li>
                 <li><a href="#gallery" class="nav-link">Gallery</a></li>
                 <li><a href="#enrollment" class="nav-link btn-primary">Connect</a></li>
             </ul>
         </div>
     </nav>
+
    <header id="home" class="hero-brutal">
         <div class="hero-visual">
             <div class="vignette"></div>
@@ -44,97 +43,205 @@
             <a href="#enrollment" class="btn-chili">Join the 2026 Season</a>
         </div>
     </header>
+
     <section id="about" class="bento-wrapper">
         <div class="bento-grid">
             <div id="mission" class="bento-box mission-box">
                 <span class="box-label">01 / WHO WE ARE</span>
                 <h2>Transforming the Chili Value Chain</h2>
-             <p>Welcome to Savanna Spice's Company Limited.
-Savanna Spice's Company Limited is a Tanzania-based agribusiness company specializing in the buying, selling, and contract farming of high-quality African Bird’s Eye Chili.
-We work directly with farmers across Tanzania and beyond, empowering them with knowledge, reliable markets, and sustainable farming partnerships.</p>
+                <p>Welcome to Savanna Spices Company Limited. We are a Tanzania-based agribusiness specializing in the buying, selling, and contract farming of high-quality African Bird’s Eye Chili. We empower farmers with knowledge and sustainable partnerships.</p>
             </div>
             <div class="bento-box stat-box">
                 <div class="stat-circle">
-                    <span class="num">12%</span>
+                    <span class="num">10%</span>
                     <span class="label">MAX MOISTURE</span>
                 </div>
             </div> 
-                      <div class="bento-box detail-box gold-tint">
-                <i class="fas fa-sedling"></i>
-               
-            <h3>🌱 Our Services</h3>
+            <div class="bento-box detail-box gold-tint">
+                <i class="fas fa-seedling"></i>
+                <h3>Our Services</h3>
                 <ul>
-                    <p>
-1️⃣ Buying & Selling African Bird’s Eye Chili
-We purchase high-quality fresh and dried African Bird’s Eye Chili from trusted farmers and supply to local and international markets.we offer-;
-</p>
-<li>Premium quality produce</li>
-
-
-<li>Long-term partnerships</li>
+                    <li>Premium quality produce</li>
+                    <li>Long-term partnerships</li>
                     <li>Competitive pricing</li>
                     <li>Reliable supply</li>
                 </ul>
             </div>
             <div class="bento-box detail-box gold-tint">
-               
-                <h3>Contract Farming Program</h3><p>2️⃣ For Farmers</p>
+                <h3>Contract Farming</h3>
                 <ul>
                     <li>Guaranteed Buy-back</li>
                     <li>Technical Support</li>
-                    <li>Long-Term Partnership</li>
-                    <li>Reliable connection to Global Market</li>
+                    <li>Global Market Connection</li>
                 </ul>
             </div>
             <div class="bento-box detail-box gold-tint">
                 <i class="fas fa-ship"></i>
-                <h3> For  Buyers</h3>
+                <h3>For Buyers</h3>
                 <ul>
-                    <p>3️⃣For Local and international buyers</p>
                     <li>100% Traceable</li>
                     <li>Grade A+ Quality</li>
                     <li>Reliable Supply</li>
                 </ul>
             </div>
-              <div class="bento-box detail-box gold-tint">
-               
-            <h3>Why Work With Us?</h3>
-                
+            <div class="bento-box detail-box gold-tint">
+                <h3>Why Work With Us?</h3>
                 <ul>
-<li> Trusted and transparent business practices</li>
-<li>Strong farmer relationships</li>
-<li>Market-driven production</li>
-<li>Focus on quality and export standards</li>
-<li>Commitment to farmer empowerment</li>
-                 
+                    <li>Transparent practices</li>
+                    <li>Strong farmer relationships</li>
+                    <li>Export standards focus</li>
                 </ul>
-                </div>
-   
+            </div>
         </div>
-        <section id="gallery" class="elite-gallery">
-    <div class="gallery-wrapper">
-        <div class="item"><img src="fresh5.jpg"><h3>GRADE A+</h3></div>
-        <div class="item"><img src="dried1.jpg"><h3>GRADE A+</h3></div>
-        <div class="item"><img src="fresh4.jpg"><h3>GRADE A+</h3><p>Are you a farmer or a buyer? Savanna Spice's company limited is ready to work with you..</p></div>
-        <div class="item"><img src="dried2.jpg"><h3>GRADE A+</h3></div>
-        <div class="item"><img src="fresh2.jpg"><h3>GRADE A+ </h3></div>
-    </div>
 </section>
+
+<section id="logistics-section">
+    <div id="process-trigger" class="teaser-row">
+        <div class="teaser-card" onclick="toggleModal('processModal')">
+            <span class="box-label">Logistics</span>
+            <h3>Seed to Shipment →</h3>
+            <p>Explore our 6-step 🌶️ export-grade A+ chili process.</p>
+        </div>
+
+        <div class="teaser-card" onclick="toggleModal('teamModal')">
+            <span class="box-label">Expertise</span>
+            <h3>Meet the Team →</h3>
+            <p>The professionals behind the Red Gold.</p>
+        </div>
+    </div>
+
+    <div id="processModal" class="spice-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="toggleModal('processModal')">&times;</span>
+
+            <div class="modal-header">
+                <h2>Our <span>Process</span></h2>
+                <p>100% Export-Grade A+ Quality</p>
+            </div>
+
+            <div class="modal-body">
+                <div class="step-card">
+                    <div>
+                        <h3>1️⃣ <span class="gold-text"> Sustainable  Sourcing</span></h3>
+                        <p>We operate a transparent "Farm-to-Gate" model, partnering directly with Tanzanian smallholder farmers.</p>
+                        <img src="fresh1.jpg" alt="Sourcing">
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div>
+                        <h3>2️⃣ <span class="gold-text">Harvest & Primary Drying</span></h3>
+                        <p>Harvested at peak potency, our chili is sun-dried in the natural Tanzanian heat.</p>
+                        <img src="harvest.jpg" alt="Harvest">
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div>
+                        <h3>3️⃣ <span class="gold-text"> Precision Re-Drying</span></h3>
+                        <p>To ensure shelf stability and premium quality, spices are re-dried at our processing site to achieve a moisture content of below 10%.</p>
+                        <img src="redrying.jpg" alt="drying">
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div>
+                        <h3>4️⃣ <span class="gold-text"> Multi-Stage Sorting & QC</span></h3>
+                        <p>Every batch undergoes rigorous sorting and quality control (QC) to remove impurities and select only the best grades.</p>
+                        <img src="sorting.jpg" alt="sorting">
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div>
+                        <h3>5️⃣ <span class="gold-text"> Expert Packaging</span></h3>
+                        <p>Final products are packed in moisture-resistant materials.</p>
+                        <img src="packaging.jpg" alt="packing">
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div>
+                        <h3>6️⃣ <span class="gold-text"> Container Loading</span></h3>
+                        <p>Final produce is securely loaded into containers at our <strong>Morogoro</strong> hub for international delivery to global markets.</p>
+                        <img src="shipped.jpg" alt="shipping">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="teamModal" class="spice-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="toggleModal('teamModal')">&times;</span>
+
+            <div class="modal-header">
+                <h2>Our <span>Team</span></h2>
+            </div>
+
+            <div class="team-item">
+               <!-- <img src="moses.jpg" alt="Moses Peter"class="team-photo">
+               -->
+    <h4>Moses Peter</h4>
+    <span class="executive-role">CEO & Founder</span>
+                <p class="mission-statement">
+                    "Dedicated to positioning Tanzania as a global powerhouse in the spice industry."
+                </p>
+
+                <div class="contact-info">
+                    <div class="info-row">
+                        <span class="label">WhatsApp:</span>
+                        <span class="value">+255 743 228 558</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Email:</span>
+                        <span class="value">mosesalex406@gmail.com</span>
+                    </div>
+                </div>
+                
+            <div class="team-item">
+               <!--  <img src="lazaro.jpg" alt="lazaro" class="team-photo">-->
+                <h4>Lazaro</h4>
+                <span class="executive-role">Logistics officer</span>
+
+                <p class="mission-statement">
+                 "Farm-to-Gate supply chain,critical export documentation"
+                </p>
+
+                <div class="contact-info">
+                    <div class="info-row">
+                        <span class="label">WhatsApp:</span>
+                        <span class="value">+255654338456</span>
+                    </div>
+                    
+                      
+                    </div>
+                </div>
+            </div> </div> </div>
+             </section>
+            
+            
+
+
+    <section id="gallery" class="elite-gallery">
+        <div class="gallery-wrapper">
+            <div class="item"><img src="fresh1.jpg"><h3>GRADE A+</h3></div>
+            <div class="item"><img src="dried1.jpg"><h3>GRADE A+</h3></div>
+            <div class="item"><img src="fresh4.jpg"><h3>GRADE A+</h3><p>Savanna Spices is ready to work with you.</p></div>
+            <div class="item"><img src="dried2.jpg"><h3>GRADE A+</h3></div>
+            <div class="item"><img src="fresh2.jpg"><h3>GRADE A+ </h3></div>
+        </div>
+    </section>
+
     <section id="enrollment" class="enrollment-section">
         <div class="form-container">
             <div class="form-title">
-               
-<h2>
-                Secure Your <span>Contract</span></h2>
+                <h2>Secure Your <span>Contract</span></h2>
             </div>
             <form id="farmer-form" class="obsidian-form">
                 <div class="input-row">
-                    <div class="field">
-                        <input type="text" id="farmer_name" placeholder="Full Name" required>
-                    </div>
-                    <div class="field">
-                        <input type="tel" id="farmer_phone" placeholder="WhatsApp Number" required>
-                    </div>
+                    <div class="field"><input type="text" id="farmer_name" placeholder="Full Name" required></div>
+                    <div class="field"><input type="tel" id="farmer_phone" placeholder="WhatsApp Number" required></div>
                 </div>
                 <input type="text" id="farm_location" placeholder="Region / District" required>
                 <select id="user_type">
@@ -148,10 +255,7 @@ We purchase high-quality fresh and dried African Bird’s Eye Chili from trusted
 
     <footer class="main-footer">
         <div class="footer-grid">
-            <div class="footer-brand">
-                
-                <p>Exporting Tanzania's finest quality chili to the world.</p>
-            </div>
+            <div class="footer-brand"><p>Exporting Tanzania's finest quality chili to the world.</p></div>
             <div class="footer-contact">
                 <h4>Partner With Us</h4>
                 <p><i class="fas fa-map-marker-alt"></i>Dar es Salaam, Tanzania</p>
@@ -161,22 +265,28 @@ We purchase high-quality fresh and dried African Bird’s Eye Chili from trusted
                 <h4>Follow the Harvest</h4>
                 <div class="social-icons">
                     <a href="https://tiktok.com/@aryd626" target="_blank"><i class="fab fa-tiktok"></i></a>
-                    <a href="https://www.instagram.com/savanna_spices_limited?igsh=a2RocnFxbHJyaGwx" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.instagram.com/savanna_spices_limited" target="_blank"><i class="fab fa-instagram"></i></a>
                     <a href="https://wa.me/255743228558" target="_blank"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Savanna Spices Company Ltd. All Rights Reserved.</p>
-        </div>
+        <div class="footer-bottom"><p>&copy; 2026 Savanna Spices Company Ltd. All Rights Reserved.</p></div>
     </footer>
+
+    
 
     <div class="liquid-dock">
         <a href="#home" title="Home"><i class="fas fa-home"></i></a>
-        <a href="#gallery" title="Gallery-section"><i class="fas fa-images"></i></a>
+        <a href="#gallery" title="Gallery"><i class="fas fa-images"></i></a>
         <a href="#enrollment" title="Enroll"><i class="fas fa-file-signature"></i></a>
     </div>
+    
+    
 
-    <script src="script.js"></script>
+
+
+  <script src="script.js"></script>
 </body>
 </html>
+
+
